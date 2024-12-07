@@ -4,7 +4,7 @@ import org.springframework.validation.BindingResult;
 
 import java.util.List;
 
-public interface BaseService<T, A, E> {
+public interface BaseService<T, A, E> extends ValidationService {
 
     T findById(Integer id);
 
