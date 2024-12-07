@@ -1,0 +1,16 @@
+CREATE TABLE category (
+	id SERIAL PRIMARY KEY,
+	name VARCHAR (32) NOT NULL,
+	description VARCHAR (128) NOT NULL
+);
+
+CREATE TABLE product (
+	id SERIAL PRIMARY KEY,
+	category_id INT REFERENCES category (id) ON DELETE SET NULL,
+	name VARCHAR (32) NOT NULL,
+	description VARCHAR (128) NOT NULL,
+	price DOUBLE PRECISION NOT NULL,
+	status BOOLEAN NOT NULL,
+	image_name VARCHAR (256) NOT NULL,
+	creation_date TIMESTAMP NOT NULL
+);
