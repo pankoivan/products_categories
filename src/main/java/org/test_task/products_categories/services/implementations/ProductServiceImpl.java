@@ -1,5 +1,6 @@
 package org.test_task.products_categories.services.implementations;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +80,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public void makeInactive(Collection<Product> products) {
         products.forEach(product -> product.setStatus(false));
         repository.saveAll(products);
