@@ -37,7 +37,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category add(CategoryAddingDto addingDto, BindingResult bindingResult) {
-        bindingResultValidation(bindingResult);
+        validateBindingResult(bindingResult);
         return repository.save(
                 Category
                         .builder()
@@ -49,7 +49,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category edit(CategoryEditingDto editingDto, BindingResult bindingResult) {
-        bindingResultValidation(bindingResult);
+        validateBindingResult(bindingResult);
         Category category = findById(editingDto.getId());
         category.setName(editingDto.getName());
         category.setDescription(editingDto.getDescription());

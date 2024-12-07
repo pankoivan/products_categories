@@ -59,7 +59,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product add(ProductAddingDto addingDto, BindingResult bindingResult) {
-        bindingResultValidation(bindingResult);
+        validateBindingResult(bindingResult);
         String filename;
         try {
             filename = uploadImage(addingDto.getEncodedImage());
@@ -82,7 +82,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product edit(ProductEditingDto editingDto, BindingResult bindingResult) {
-        bindingResultValidation(bindingResult);
+        validateBindingResult(bindingResult);
         Product product = findById(editingDto.getId());
         product.setName(editingDto.getName());
         product.setDescription(editingDto.getDescription());

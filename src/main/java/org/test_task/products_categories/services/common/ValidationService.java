@@ -6,7 +6,7 @@ import org.test_task.products_categories.exceptions.UrlValidationException;
 
 public interface ValidationService {
 
-    default void bindingResultValidation(BindingResult bindingResult) {
+    default void validateBindingResult(BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
             throw new InputValidationException(bindingResult.getFieldErrors());
         }
