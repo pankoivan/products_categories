@@ -10,8 +10,10 @@ import org.test_task.products_categories.dto.in.product.ProductEditingDto;
 import org.test_task.products_categories.entities.Product;
 import org.test_task.products_categories.exceptions.EntityNotFoundException;
 import org.test_task.products_categories.repositories.ProductRepository;
+import org.test_task.products_categories.services.interfaces.CategoryService;
 import org.test_task.products_categories.services.interfaces.ProductService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -20,6 +22,8 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository repository;
+
+    private CategoryService categoryService;
 
     @Override
     public Product findById(Integer id) {
@@ -33,17 +37,44 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product add(ProductAddingDto addingDto, BindingResult bindingResult) {
-        return null;
+        bindingResultValidation(bindingResult);
+        return repository.save(
+                Product
+                        .builder()
+                        .name(addingDto.getName())
+                        .description(addingDto.getDescription())
+                        .price(addingDto.getPrice())
+                        //.imageName() todo
+                        .status(true)
+                        .category(categoryService.findById(addingDto.getCategoryId()))
+                        .creationDate(LocalDateTime.now())
+                        .build()
+        );
     }
 
     @Override
     public Product edit(ProductEditingDto editingDto, BindingResult bindingResult) {
-        return null;
+        bindingResultValidation(bindingResult);
+        Product product = findById(editingDto.getId());
+        product.setName(editingDto.getName());
+        product.setDescription(editingDto.getDescription());
+        product.setPrice(editingDto.getPrice());
+        if (editingDto.getStatus() != null) {
+            product.setStatus(editingDto.getStatus());
+        }
+        if (editingDto.getCategoryId() != null) {
+            product.setCategory(categoryService.findById(editingDto.getCategoryId()));
+        }
+        if (editingDto.getEncodedImage() != null) {
+            // todo
+        }
+        return repository.save(product);
     }
 
     @Override
     public void deleteById(Integer id) {
-
+        Product product = findById(id);
+        repository.deleteById(product.getId());
     }
 
 }
