@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.test_task.products_categories.dto.in.product.ProductAddingDto;
 import org.test_task.products_categories.dto.in.product.ProductEditingDto;
 import org.test_task.products_categories.entities.Product;
+import org.test_task.products_categories.exceptions.EntityNotFoundException;
 import org.test_task.products_categories.repositories.ProductRepository;
 import org.test_task.products_categories.services.interfaces.ProductService;
 
@@ -22,7 +23,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product findById(Integer id) {
-        return null;
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Продукт с id \"%s\" не найден"));
     }
 
     @Override

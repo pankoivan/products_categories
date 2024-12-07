@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.test_task.products_categories.dto.in.category.CategoryAddingDto;
 import org.test_task.products_categories.dto.in.category.CategoryEditingDto;
 import org.test_task.products_categories.entities.Category;
+import org.test_task.products_categories.exceptions.EntityNotFoundException;
 import org.test_task.products_categories.repositories.CategoryRepository;
 import org.test_task.products_categories.services.interfaces.CategoryService;
 
@@ -22,7 +23,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category findById(Integer id) {
-        return null;
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Категория с id \"%s\" не найдена"));
     }
 
     @Override
