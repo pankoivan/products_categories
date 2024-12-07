@@ -11,6 +11,7 @@ import org.test_task.products_categories.entities.Category;
 import org.test_task.products_categories.exceptions.EntityNotFoundException;
 import org.test_task.products_categories.repositories.CategoryRepository;
 import org.test_task.products_categories.services.interfaces.CategoryService;
+import org.test_task.products_categories.services.interfaces.ProductService;
 
 import java.util.List;
 
@@ -20,6 +21,8 @@ import java.util.List;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository repository;
+
+    private ProductService productService;
 
     @Override
     public Category findById(Integer id) {
@@ -56,6 +59,7 @@ public class CategoryServiceImpl implements CategoryService {
     public void deleteById(Integer id) {
         Category category = findById(id);
         repository.deleteById(category.getId());
+        productService.makeInactive(category.getProducts());
     }
 
 }

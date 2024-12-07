@@ -14,6 +14,7 @@ import org.test_task.products_categories.services.interfaces.CategoryService;
 import org.test_task.products_categories.services.interfaces.ProductService;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -75,6 +76,12 @@ public class ProductServiceImpl implements ProductService {
     public void deleteById(Integer id) {
         Product product = findById(id);
         repository.deleteById(product.getId());
+    }
+
+    @Override
+    public void makeInactive(Collection<Product> products) {
+        products.forEach(product -> product.setStatus(false));
+        repository.saveAll(products);
     }
 
 }
