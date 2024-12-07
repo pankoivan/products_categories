@@ -4,10 +4,12 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.test_task.products_categories.dto.in.product.ProductAddingDto;
 import org.test_task.products_categories.dto.in.product.ProductEditingDto;
+import org.test_task.products_categories.dto.in.product.ProductSavingDto;
 import org.test_task.products_categories.entities.Product;
 import org.test_task.products_categories.exceptions.EntityNotFoundException;
 import org.test_task.products_categories.repositories.ProductRepository;
@@ -24,6 +26,9 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository repository;
+
+    @Value("${my.file.upload-path}")
+    private final String uploadPath;
 
     private CategoryService categoryService;
 
@@ -46,7 +51,7 @@ public class ProductServiceImpl implements ProductService {
                         .name(addingDto.getName())
                         .description(addingDto.getDescription())
                         .price(addingDto.getPrice())
-                        //.imageName() todo
+                        .imageName(uploadImage(addingDto.getEncodedImage()))
                         .status(true)
                         .category(categoryService.findById(addingDto.getCategoryId()))
                         .creationDate(LocalDateTime.now())
@@ -68,7 +73,7 @@ public class ProductServiceImpl implements ProductService {
             product.setCategory(categoryService.findById(editingDto.getCategoryId()));
         }
         if (editingDto.getEncodedImage() != null) {
-            // todo
+            product.setImageName(uploadImage(editingDto.getEncodedImage()));
         }
         return repository.save(product);
     }
@@ -84,6 +89,10 @@ public class ProductServiceImpl implements ProductService {
     public void makeInactive(Collection<Product> products) {
         products.forEach(product -> product.setStatus(false));
         repository.saveAll(products);
+    }
+
+    private String uploadImage(ProductSavingDto.EncodedBase64Image encodedImage) {
+        return null; // todo
     }
 
 }
