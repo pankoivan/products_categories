@@ -21,10 +21,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.util.Base64;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -46,6 +43,18 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> findAll() {
         return repository.findAll();
+    }
+
+    @Override
+    public List<Product> findAll(Map<String, String> params) {
+        // todo: обработать некорректные параметры GET-запроса
+        return findAll()
+                .stream()
+                .filter(product -> product.getName().contains(params.get("name")))
+                .filter(product -> product.getPrice() >= Integer.parseInt(params.get("priceFrom")))
+                .filter(product -> product.getPrice() <= Integer.parseInt(params.get("priceTo")))
+                .filter(product -> product.getCategory().getName().contains("categoryName"))
+                .toList();
     }
 
     @Override
