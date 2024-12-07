@@ -12,13 +12,19 @@ import org.test_task.products_categories.dto.in.product.ProductEditingDto;
 import org.test_task.products_categories.dto.in.product.ProductSavingDto;
 import org.test_task.products_categories.entities.Product;
 import org.test_task.products_categories.exceptions.EntityNotFoundException;
+import org.test_task.products_categories.exceptions.FileUploadingException;
 import org.test_task.products_categories.repositories.ProductRepository;
 import org.test_task.products_categories.services.interfaces.CategoryService;
 import org.test_task.products_categories.services.interfaces.ProductService;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -45,13 +51,19 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product add(ProductAddingDto addingDto, BindingResult bindingResult) {
         bindingResultValidation(bindingResult);
+        String filename;
+        try {
+            filename = uploadImage(addingDto.getEncodedImage());
+        } catch (IOException e) {
+            throw new FileUploadingException("Произошла ошибка при загрузке файла на сервер", e);
+        }
         return repository.save(
                 Product
                         .builder()
                         .name(addingDto.getName())
                         .description(addingDto.getDescription())
                         .price(addingDto.getPrice())
-                        .imageName(uploadImage(addingDto.getEncodedImage()))
+                        .imageName(filename)
                         .status(true)
                         .category(categoryService.findById(addingDto.getCategoryId()))
                         .creationDate(LocalDateTime.now())
@@ -73,7 +85,11 @@ public class ProductServiceImpl implements ProductService {
             product.setCategory(categoryService.findById(editingDto.getCategoryId()));
         }
         if (editingDto.getEncodedImage() != null) {
-            product.setImageName(uploadImage(editingDto.getEncodedImage()));
+            try {
+                product.setImageName(uploadImage(editingDto.getEncodedImage()));
+            } catch (IOException e) {
+                throw new FileUploadingException("Произошла ошибка при загрузке файла на сервер", e);
+            }
         }
         return repository.save(product);
     }
@@ -91,8 +107,10 @@ public class ProductServiceImpl implements ProductService {
         repository.saveAll(products);
     }
 
-    private String uploadImage(ProductSavingDto.EncodedBase64Image encodedImage) {
-        return null; // todo
+    private String uploadImage(ProductSavingDto.EncodedBase64Image encodedImage) throws IOException {
+        String filename = UUID.randomUUID().toString();
+        Files.write(Paths.get(uploadPath, filename), Base64.getDecoder().decode(encodedImage.image()));
+        return filename;
     }
 
 }
