@@ -2,6 +2,7 @@ package org.test_task.products_categories.controllers.rest;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.test_task.products_categories.dto.in.product.ProductAddingDto;
@@ -15,6 +16,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/products")
 @AllArgsConstructor
+@PreAuthorize("permitAll()")
 public class ProductRestController {
 
     private final ProductService service;
