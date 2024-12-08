@@ -23,7 +23,8 @@ public class ProductRestController {
 
     @GetMapping
     public List<Product> findAll(Map<String, String> params) {
-        return service.findAll(params);
+        // todo: использовать версию с параметрами после того, как учту там некорректные параметры
+        return service.findAll();
     }
 
     @PostMapping("/add")
