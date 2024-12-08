@@ -20,13 +20,18 @@ public class CategoryMvcController {
     @GetMapping
     public String findAll(Model model) {
         model.addAttribute("categories", service.findAll());
-        return "categories";
+        return "category/categories";
     }
 
-    @GetMapping("/{id}")
-    public String findById(Model model, @PathVariable("id") String pathId) {
+    @GetMapping("/add")
+    public String add() {
+        return "category/category-add";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String edit(Model model, @PathVariable("id") String pathId) {
         model.addAttribute("category", service.findById(service.validateAndParsePathId(pathId)));
-        return "category";
+        return "category/category-edit";
     }
 
 }
