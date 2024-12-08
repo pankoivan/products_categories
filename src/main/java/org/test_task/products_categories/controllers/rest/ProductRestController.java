@@ -5,8 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.test_task.products_categories.dto.in.product.ProductAddingDto;
-import org.test_task.products_categories.dto.in.product.ProductEditingDto;
+import org.test_task.products_categories.dto.ProductSavingDto;
 import org.test_task.products_categories.entities.Product;
 import org.test_task.products_categories.services.interfaces.ProductService;
 
@@ -32,13 +31,13 @@ public class ProductRestController {
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid ProductAddingDto addingDto, BindingResult bindingResult) {
-        service.add(addingDto, bindingResult);
+    public void add(@RequestBody @Valid ProductSavingDto savingDto, BindingResult bindingResult) {
+        service.add(savingDto, bindingResult);
     }
 
     @PutMapping("/{id}")
-    public void edit(@PathVariable("id") String pathId, @RequestBody @Valid ProductEditingDto editingDto, BindingResult bindingResult) {
-        service.edit(service.validateAndParsePathId(pathId), editingDto, bindingResult);
+    public void edit(@PathVariable("id") String pathId, @RequestBody @Valid ProductSavingDto savingDto, BindingResult bindingResult) {
+        service.edit(service.validateAndParsePathId(pathId), savingDto, bindingResult);
     }
 
     @DeleteMapping("/{id}")

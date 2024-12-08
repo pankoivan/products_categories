@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
-import org.test_task.products_categories.dto.in.product.ProductAddingDto;
-import org.test_task.products_categories.dto.in.product.ProductEditingDto;
-import org.test_task.products_categories.dto.in.product.ProductSavingDto;
+import org.test_task.products_categories.dto.ProductSavingDto;
 import org.test_task.products_categories.entities.Product;
 import org.test_task.products_categories.exceptions.EntityNotFoundException;
 import org.test_task.products_categories.exceptions.FileUploadingException;
@@ -57,7 +55,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product add(ProductAddingDto addingDto, BindingResult bindingResult) {
+    public Product add(ProductSavingDto addingDto, BindingResult bindingResult) {
         //validateBindingResult(bindingResult);
         String filename;
         try {
@@ -81,7 +79,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product edit(Integer id, ProductEditingDto editingDto, BindingResult bindingResult) {
+    public Product edit(Integer id, ProductSavingDto editingDto, BindingResult bindingResult) {
         validateBindingResult(bindingResult);
         Product product = findById(id);
         product.setName(editingDto.getName());

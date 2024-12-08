@@ -5,8 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.test_task.products_categories.dto.in.category.CategoryAddingDto;
-import org.test_task.products_categories.dto.in.category.CategoryEditingDto;
+import org.test_task.products_categories.dto.CategorySavingDto;
 import org.test_task.products_categories.entities.Category;
 import org.test_task.products_categories.services.interfaces.CategoryService;
 
@@ -31,13 +30,13 @@ public class CategoryRestController {
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid CategoryAddingDto addingDto, BindingResult bindingResult) {
-        service.add(addingDto, bindingResult);
+    public void add(@RequestBody @Valid CategorySavingDto savingDto, BindingResult bindingResult) {
+        service.add(savingDto, bindingResult);
     }
 
     @PutMapping("/{id}")
-    public void edit(@PathVariable("id") String pathId, @RequestBody @Valid CategoryEditingDto editingDto, BindingResult bindingResult) {
-        service.edit(service.validateAndParsePathId(pathId), editingDto, bindingResult);
+    public void edit(@PathVariable("id") String pathId, @RequestBody @Valid CategorySavingDto savingDto, BindingResult bindingResult) {
+        service.edit(service.validateAndParsePathId(pathId), savingDto, bindingResult);
     }
 
     @DeleteMapping("/{id}")

@@ -6,8 +6,7 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
-import org.test_task.products_categories.dto.in.category.CategoryAddingDto;
-import org.test_task.products_categories.dto.in.category.CategoryEditingDto;
+import org.test_task.products_categories.dto.CategorySavingDto;
 import org.test_task.products_categories.entities.Category;
 import org.test_task.products_categories.exceptions.EntityNotFoundException;
 import org.test_task.products_categories.repositories.CategoryRepository;
@@ -36,7 +35,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category add(CategoryAddingDto addingDto, BindingResult bindingResult) {
+    public Category add(CategorySavingDto addingDto, BindingResult bindingResult) {
         validateBindingResult(bindingResult);
         return repository.save(
                 Category
@@ -48,7 +47,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category edit(Integer id, CategoryEditingDto editingDto, BindingResult bindingResult) {
+    public Category edit(Integer id, CategorySavingDto editingDto, BindingResult bindingResult) {
         validateBindingResult(bindingResult);
         Category category = findById(id);
         category.setName(editingDto.getName());

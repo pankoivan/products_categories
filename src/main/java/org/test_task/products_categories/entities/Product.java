@@ -29,11 +29,11 @@ public class Product extends AbstractBaseEntity {
     @Column(name = "image_name")
     private String imageName;
 
-    @Column(name = "creation_date")
-    private LocalDateTime creationDate;
-
     @Column(name = "status")
     private Boolean status;
+
+    @Column(name = "creation_date")
+    private LocalDateTime creationDate;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
