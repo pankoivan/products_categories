@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="ru" xmlns:th="https://www.thymeleaf.org">
+<html lang="ru" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
     <!---->
     <div th:replace="~{fragments/head :: head ('Категории')}"></div>
     <!---->
@@ -22,8 +22,8 @@
                             <div th:text="${each.description}"></div>
                         </div>
                         <div>
-                            <a href="#" th:href="@{/categories/edit/__${each.id}__}" class="d-block btn btn-success w-100 mb-1">Изменить</a>
-                            <button class="d-block btn btn-danger w-100" th:attr="onclick=|fetchDelete('categories', ${each.id})|">Удалить</button>
+                            <a href="#" th:href="@{/categories/edit/__${each.id}__}" class="d-block btn btn-success w-100 mb-1" sec:authorize="hasRole('ADMIN')">Изменить</a>
+                            <button class="d-block btn btn-danger w-100" th:attr="onclick=|fetchDelete('categories', ${each.id})|" sec:authorize="hasRole('ADMIN')">Удалить</button>
                         </div>
                     </div>
                 </div>
@@ -31,7 +31,7 @@
             <!---->
             <div class="row">
                 <div class="col mx-auto">
-                    <a href="#" th:href="@{/categories/add}" class="btn btn-lg btn-primary">Создать</a>
+                    <a href="#" th:href="@{/categories/add}" class="btn btn-lg btn-primary" sec:authorize="hasRole('ADMIN')">Создать</a>
                 </div>
             </div>
             <!---->

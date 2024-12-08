@@ -18,12 +18,14 @@ public class CategoryMvcController {
     private final CategoryService service;
 
     @GetMapping
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String findAll(Model model) {
         model.addAttribute("categories", service.findAll());
         return "category-list";
     }
 
     @GetMapping("/add")
+    @PreAuthorize("hasRole('ADMIN')")
     public String add(Model model) {
         model.addAttribute("title", "Создание категории");
         model.addAttribute("category", null);
@@ -31,6 +33,7 @@ public class CategoryMvcController {
     }
 
     @GetMapping("/edit/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String edit(Model model, @PathVariable("id") String pathId) {
         model.addAttribute("title", "Изменение категории");
         model.addAttribute("category", service.findById(service.validateAndParsePathId(pathId)));

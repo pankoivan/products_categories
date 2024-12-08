@@ -14,32 +14,37 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/categories")
 @AllArgsConstructor
-@PreAuthorize("permitAll()")
+@PreAuthorize("isAuthenticated()")
 public class CategoryRestController {
 
     private final CategoryService service;
 
     @GetMapping
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public List<Category> findAll() {
         return service.findAll();
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public Category findById(@PathVariable("id") String pathId) {
         return service.findById(service.validateAndParsePathId(pathId));
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public void add(@RequestBody @Valid CategorySavingDto savingDto, BindingResult bindingResult) {
         service.add(savingDto, bindingResult);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public void edit(@PathVariable("id") String pathId, @RequestBody @Valid CategorySavingDto savingDto, BindingResult bindingResult) {
         service.edit(service.validateAndParsePathId(pathId), savingDto, bindingResult);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteById(@PathVariable("id") String pathId) {
         service.deleteById(service.validateAndParsePathId(pathId));
     }

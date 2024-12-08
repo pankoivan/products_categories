@@ -16,7 +16,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/products")
 @AllArgsConstructor
-@PreAuthorize("permitAll()")
+@PreAuthorize("isAuthenticated()")
 public class ProductMvcController {
 
     private final ProductService service;
@@ -24,12 +24,14 @@ public class ProductMvcController {
     private final CategoryService categoryService;
 
     @GetMapping
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String findAll(Model model, @RequestParam Map<String, String> params) {
         model.addAttribute("products", service.findAll(params));
         return "product-list";
     }
 
     @GetMapping("/add")
+    @PreAuthorize("hasRole('ADMIN')")
     public String add(Model model) {
         model.addAttribute("title", "Создание продукта");
         model.addAttribute("product", null);
@@ -38,6 +40,7 @@ public class ProductMvcController {
     }
 
     @GetMapping("/edit/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String edit(Model model, @PathVariable("id") String pathId) {
         model.addAttribute("title", "Изменение продукта");
         model.addAttribute("product", service.findById(service.validateAndParsePathId(pathId)));
