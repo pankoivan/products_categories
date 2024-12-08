@@ -36,18 +36,19 @@
                             <div class="mb-1">
                                 <span class="fw-semibold">Цена:</span>
                                 <span th:text="${each.price}"></span>
+                                <span>₽</span>
                             </div>
                             <div class="mb-1">
                                 <span class="fw-semibold">Статус:</span>
-                                <span th:text="${each.status}"></span>
+                                <span th:text="${each.status ? 'Активен' : 'Неактивен'}"></span>
                             </div>
                             <div class="mb-1">
                                 <span class="fw-semibold">Категория:</span>
-                                <span th:text="${each.category.name}"></span>
+                                <span th:text="${each.category != null ? each.category.name : 'отсутствует'}"></span>
                             </div>
                             <div class="mb-2">
-                                <span class="fw-semibold">Дата:</span>
-                                <span th:text="${each.creationDate}"></span>
+                                <span class="fw-semibold">Создан:</span>
+                                <span th:text="${each.formattedCreationDate}"></span>
                             </div>
                             <div class="d-flex flex-row align-items-center justify-content-between">
                                 <a href="#" th:href="@{/products/edit/__${each.id}__}" class="btn btn-success w-100 me-2" sec:authorize="hasRole('ADMIN')">Изменить</a>

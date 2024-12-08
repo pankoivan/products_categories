@@ -65,7 +65,7 @@
                             <div class="col mx-auto">
                                 <label for="categoryId" class="form-label mb-1">Категория</label>
                                 <select name="categoryId" id="categoryId" class="form-select" data-element="input-field">
-                                    <option th:each="each : ${categories}" th:text="${each.name}" th:value="${each.id}"></option>
+                                    <option th:each="each : ${categories}" th:text="${each.name}" th:value="${each.id}" th:selected="${product.category != null && product.category.id == each.id}"></option>
                                 </select>
                                 <div class="invalid-feedback" id="categoryId-invalid"></div>
                             </div>

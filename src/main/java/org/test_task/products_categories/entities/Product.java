@@ -6,6 +6,7 @@ import lombok.experimental.SuperBuilder;
 import org.test_task.products_categories.entities.common.AbstractBaseEntity;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "product")
@@ -38,5 +39,9 @@ public class Product extends AbstractBaseEntity {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+    public String getFormattedCreationDate() {
+        return DateTimeFormatter.ofPattern("dd MMM yyyy в HH:mm:ss").format(creationDate);
+    }
 
 }
