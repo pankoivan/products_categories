@@ -13,6 +13,4 @@ public class ExceptionResponseEntity {
 
     private Integer errorStatusCode;
 
-    private boolean fieldErrors;
-
 }

@@ -9,20 +9,20 @@ import java.util.List;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 @Getter
-public class InputValidationException extends RuntimeException {
+public class InputFieldsValidationException extends RuntimeException {
 
     private final List<FieldError> fieldErrors;
 
-    public InputValidationException(List<FieldError> fieldErrors) {
+    public InputFieldsValidationException(List<FieldError> fieldErrors) {
         this.fieldErrors = fieldErrors;
     }
 
-    public InputValidationException(List<FieldError> fieldErrors, String msg) {
+    public InputFieldsValidationException(List<FieldError> fieldErrors, String msg) {
         super(msg);
         this.fieldErrors = fieldErrors;
     }
 
-    public InputValidationException(List<FieldError> fieldErrors, String msg, Throwable cause) {
+    public InputFieldsValidationException(List<FieldError> fieldErrors, String msg, Throwable cause) {
         super(msg, cause);
         this.fieldErrors = fieldErrors;
     }

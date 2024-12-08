@@ -1,14 +1,14 @@
 package org.test_task.products_categories.services.interfaces.common;
 
 import org.springframework.validation.BindingResult;
-import org.test_task.products_categories.exceptions.InputValidationException;
+import org.test_task.products_categories.exceptions.InputFieldsValidationException;
 import org.test_task.products_categories.exceptions.UrlValidationException;
 
 public interface ValidationService {
 
     default void validateBindingResult(BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
-            throw new InputValidationException(bindingResult.getFieldErrors());
+            throw new InputFieldsValidationException(bindingResult.getFieldErrors());
         }
     }
 

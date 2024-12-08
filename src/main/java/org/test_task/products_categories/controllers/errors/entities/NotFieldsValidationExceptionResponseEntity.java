@@ -8,12 +8,12 @@ import org.springframework.http.HttpStatus;
 @NoArgsConstructor
 @Getter
 @Setter
-public class NoFieldsValidationExceptionResponseEntity extends ExceptionResponseEntity {
+public class NotFieldsValidationExceptionResponseEntity extends ExceptionResponseEntity {
 
     private String errorDescription;
 
-    public NoFieldsValidationExceptionResponseEntity(String errorDescription) {
-        super(HttpStatus.BAD_REQUEST.value(), false);
+    public NotFieldsValidationExceptionResponseEntity(String errorDescription) {
+        super(HttpStatus.BAD_REQUEST.value());
         this.errorDescription = errorDescription;
     }
 

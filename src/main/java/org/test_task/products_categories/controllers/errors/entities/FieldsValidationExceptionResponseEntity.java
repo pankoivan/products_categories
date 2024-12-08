@@ -17,7 +17,7 @@ public class FieldsValidationExceptionResponseEntity extends ExceptionResponseEn
     private List<FieldErrorPair> fieldErrorPairs;
 
     public FieldsValidationExceptionResponseEntity(List<FieldError> fieldErrors) {
-        super(HttpStatus.BAD_REQUEST.value(), true);
+        super(HttpStatus.BAD_REQUEST.value());
         this.fieldErrorPairs = fieldErrors.stream().map(FieldErrorPair::new).toList();
     }
 
