@@ -17,7 +17,6 @@ public class MvcConfig implements WebMvcConfigurer {
     private final String uploadPath;
 
     @Override
-    // todo: не забыть про Security на этот URL-адрес
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
                 .addResourceHandler("/uploads/**")
