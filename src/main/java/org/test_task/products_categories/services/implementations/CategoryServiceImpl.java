@@ -52,6 +52,7 @@ public class CategoryServiceImpl implements CategoryService {
         validateBindingResult(bindingResult);
         //Category category = findById(editingDto.getId()); todo
         Category category = findById(id);
+        System.out.println(id);
         category.setName(editingDto.getName());
         category.setDescription(editingDto.getDescription());
         return repository.save(category);

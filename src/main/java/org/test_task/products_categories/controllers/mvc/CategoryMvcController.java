@@ -24,14 +24,17 @@ public class CategoryMvcController {
     }
 
     @GetMapping("/add")
-    public String add() {
-        return "main/category/category-add";
+    public String add(Model model) {
+        model.addAttribute("title", "Создание категории");
+        model.addAttribute("category", null);
+        return "main/category/category-save";
     }
 
     @GetMapping("/edit/{id}")
     public String edit(Model model, @PathVariable("id") String pathId) {
+        model.addAttribute("title", "Изменение категории");
         model.addAttribute("category", service.findById(service.validateAndParsePathId(pathId)));
-        return "main/category/category-edit";
+        return "main/category/category-save";
     }
 
 }

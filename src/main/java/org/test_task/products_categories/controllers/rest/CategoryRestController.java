@@ -27,6 +27,7 @@ public class CategoryRestController {
 
     @PostMapping
     public void add(@RequestBody @Valid CategoryAddingDto addingDto, BindingResult bindingResult) {
+        System.out.println(addingDto);
         service.add(addingDto, bindingResult);
     }
 
