@@ -1,4 +1,4 @@
-package org.test_task.products_categories.services.common;
+package org.test_task.products_categories.services.interfaces.common;
 
 import org.springframework.validation.BindingResult;
 

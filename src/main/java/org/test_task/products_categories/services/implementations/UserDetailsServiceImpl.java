@@ -1,6 +1,8 @@
 package org.test_task.products_categories.services.implementations;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -8,7 +10,8 @@ import org.springframework.stereotype.Service;
 import org.test_task.products_categories.repositories.AppUserRepository;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
+@Setter(onMethod_ = @Autowired)
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final AppUserRepository repository;

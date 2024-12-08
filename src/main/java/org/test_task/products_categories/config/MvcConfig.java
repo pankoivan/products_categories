@@ -8,9 +8,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@RequiredArgsConstructor
-@Setter(onMethod = @__(@Autowired))
 @Configuration
+@RequiredArgsConstructor
+@Setter(onMethod_ = @Autowired)
 public class MvcConfig implements WebMvcConfigurer {
 
     @Value("${my.file.upload-path}")
