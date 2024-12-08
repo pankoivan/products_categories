@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html lang="ru" xmlns:th="https://www.thymeleaf.org">
+    <!---->
+    <div th:replace="~{fragments/head :: head ('Товары')}"></div>
+    <!---->
+    <body>
+        <!---->
+        <div class="container text-primary my-5">
+            <!---->
+            <div class="row mb-2">
+                <div class="col mx-auto">
+                    <h1 class="fs-4">Товары</h1>
+                </div>
+            </div>
+            <!---->
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 text-center fs-5 g-5">
+                <div class="col mx-auto" th:each="each : ${products}">
+                    <div class="border rounded text-start p-3">
+                        <h4 class="fs-4 mb-3 text-center" th:text="${each.name}"></h4>
+                        <div class="mb-3">
+                            <img th:src="@{/uploads/__${each.imageName}__}" width="256" alt="Изображение" />
+                        </div>
+                        <div>
+                            <span>Описание:</span>
+                            <span th:text="${each.description}"></span>
+                        </div>
+                        <div>
+                            <span>Цена:</span>
+                            <span th:text="${each.price}"></span>
+                        </div>
+                        <div>
+                            <span>Статус:</span>
+                            <span th:text="${each.status}"></span>
+                        </div>
+                        <div>
+                            <span>Дата:</span>
+                            <span th:text="${each.creationDate}"></span>
+                        </div>
+                        <div>
+                            <span>Категория:</span>
+                            <span th:text="${each.category.name}"></span>
+                        </div>
+                        <div class="d-flex flex-row align-items-center justify-content-between">
+                            <a href="#" th:href="@{/products/edit/__${each.id}__}" class="btn btn-success w-100 mb-1">Изменить</a>
+                            <button class="btn btn-danger w-100" th:attr="onclick=|fetchDelete('products', ${each.id})|">Удалить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!---->
+            <div class="row mt-2">
+                <div class="col mx-auto">
+                    <a href="#" th:href="@{/products/add}" class="btn btn-lg btn-primary">Создать</a>
+                </div>
+            </div>
+            <!---->
+            <!--<form id="csrf-form1" action="#" th:action="@{/api/products/add}" method="post" class="d-none"></form>-->
+            <!---->
+        </div>
+        <!---->
+        <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/js/entity-delete.js}"></script>
+        <!---->
+    </body>
+    <!---->
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html lang="ru" xmlns:th="https://www.thymeleaf.org">
+    <!---->
+    <div th:replace="~{fragments/head :: head (${title})}"></div>
+    <!---->
+    <body>
+        <!---->
+        <div class="container text-primary fs-5 my-5">
+            <!---->
+            <div class="row mb-2">
+                <div class="col mx-auto">
+                    <h1 class="fs-4" th:text="${title}"></h1>
+                </div>
+            </div>
+            <!---->
+            <div class="row mb-3">
+                <div class="col mx-auto">
+                    <form th:attr="onsubmit=|fetchSave(${category == null}, ${category != null ? category.id : null})|" action="#" th:action="@{/api/categories}" method="post" class="border border-black rounded needs-validation p-3" novalidate>
+                        <!---->
+                        <div class="row mb-2">
+                            <div class="col mx-auto">
+                                <label for="name" class="form-label mb-1">Название</label>
+                                <input type="text" name="name" id="name" class="form-control" placeholder="Введите название категории" data-element="input-field" th:value="${category != null ? category.name : null}" />
+                                <div class="invalid-feedback" id="name-invalid"></div>
+                            </div>
+                        </div>
+                        <!---->
+                        <div class="row mb-3">
+                            <div class="col mx-auto">
+                                <label for="description" class="form-label mb-1">Описание</label>
+                                <input type="text" name="description" id="description" class="form-control" placeholder="Введите описание категории" data-element="input-field" th:value="${category != null ? category.description : null}" />
+                                <div class="invalid-feedback" id="description-invalid"></div>
+                            </div>
+                        </div>
+                        <!---->
+                        <div class="row">
+                            <div class="col mx-auto">
+                                <button type="submit" class="btn btn-primary">Создать</button>
+                            </div>
+                        </div>
+                        <!---->
+                    </form>
+                </div>
+            </div>
+            <!---->
+        </div>
+        <!---->
+        <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/js/category-save.js}"></script>
+        <!---->
+    </body>
+    <!---->
+</html>

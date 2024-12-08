@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html lang="ru" xmlns:th="https://www.thymeleaf.org">
+    <!---->
+    <div th:replace="~{fragments/head :: head ('Категории')}"></div>
+    <!---->
+    <body>
+        <!---->
+        <div class="container text-primary fs-5 my-5">
+            <!---->
+            <div class="row mb-2">
+                <div class="col mx-auto">
+                    <h1 class="fs-4">Категории</h1>
+                </div>
+            </div>
+            <!---->
+            <div class="row mb-3" th:each="each, status : ${categories}">
+                <div class="col mx-auto">
+                    <div class="border border-black rounded p-2 d-flex flex-row align-items-center justify-content-between">
+                        <div>
+                            <div th:text="${each.name}" class="fw-semibold"></div>
+                            <div th:text="${each.description}"></div>
+                        </div>
+                        <div>
+                            <a href="#" th:href="@{/categories/edit/__${each.id}__}" class="d-block btn btn-success w-100 mb-1">Изменить</a>
+                            <button class="d-block btn btn-danger w-100" th:attr="onclick=|fetchDelete('categories', ${each.id})|">Удалить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!---->
+            <div class="row">
+                <div class="col mx-auto">
+                    <a href="#" th:href="@{/categories/add}" class="btn btn-lg btn-primary">Создать</a>
+                </div>
+            </div>
+            <!---->
+            <form id="csrf-form" action="#" th:action="@{/api/categories/add}" method="post" class="d-none"></form>
+            <!---->
+        </div>
+        <!---->
+        <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/js/entity-delete.js}"></script>
+        <!---->
+    </body>
+    <!---->
+</html>
