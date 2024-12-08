@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+<html lang="ru" xmlns:th="https://www.thymeleaf.org">
+    <!---->
+    <div th:replace="~{fragments/head :: head (${title})}"></div>
+    <!---->
+    <body>
+        <!---->
+        <div class="container text-primary fs-5 my-5">
+            <!---->
+            <div class="row mb-2">
+                <div class="col mx-auto">
+                    <h1 class="fs-4" th:text="${title}"></h1>
+                </div>
+            </div>
+            <!---->
+            <div class="row mb-3">
+                <div class="col mx-auto">
+                    <form th:attr="onsubmit=|save(${product == null}, ${product != null ? product.id : null})|" action="#" th:action="@{/api/products}" method="post" class="border border-black rounded needs-validation p-3" novalidate>
+                        <!---->
+                        <div class="row mb-2">
+                            <div class="col mx-auto">
+                                <label for="name" class="form-label mb-1">Название</label>
+                                <input type="text" name="name" id="name" class="form-control" placeholder="Введите название товара" data-element="input-field" th:value="${product != null ? product.name : null}" />
+                                <div class="invalid-feedback" id="name-invalid"></div>
+                            </div>
+                        </div>
+                        <!---->
+                        <div class="row mb-2">
+                            <div class="col mx-auto">
+                                <label for="description" class="form-label mb-1">Описание</label>
+                                <input type="text" name="description" id="description" class="form-control" placeholder="Введите описание товара" data-element="input-field" th:value="${product != null ? product.description : null}" />
+                                <div class="invalid-feedback" id="description-invalid"></div>
+                            </div>
+                        </div>
+                        <!---->
+                        <div class="row mb-2">
+                            <div class="col mx-auto">
+                                <label for="price" class="form-label mb-1">Цена</label>
+                                <input type="number" step="0.01" name="price" id="price" class="form-control" placeholder="Введите цену товара" data-element="input-field" th:value="${product != null ? product.price : null}" />
+                                <div class="invalid-feedback" id="price-invalid"></div>
+                            </div>
+                        </div>
+                        <!---->
+                        <div class="row mb-2">
+                            <div class="col mx-auto">
+                                <label for="image" class="form-label mb-1">Изображение</label>
+                                <input type="file" name="image" id="image" class="form-control" placeholder="Выберите изображение" data-element="input-field" />
+                                <div class="invalid-feedback" id="image-invalid"></div>
+                            </div>
+                        </div>
+                        <!---->
+                        <div class="row mb-2">
+                            <div class="col mx-auto">
+                                <label for="status" class="form-label mb-1">Статус</label>
+                                <select class="form-select" name="status" id="status" data-element="input-field">
+                                    <option value="true" th:selected="${product != null ? product.status : true}">Активен</option>
+                                    <option value="false" th:selected="${product != null ? product.status : false}">Неактивен</option>
+                                </select>
+                                <div class="invalid-feedback" id="status-invalid"></div>
+                            </div>
+                        </div>
+                        <!---->
+                        <div class="row mb-3">
+                            <div class="col mx-auto">
+                                <label for="image" class="form-label mb-1">Категория</label>
+                                <select class="form-select" name="categoryId" id="categoryId" data-element="input-field">
+                                    <option th:each="each : ${categories}" th:text="${each.name}" th:value="${each.id}"></option>
+                                </select>
+                                <div class="invalid-feedback" id="categoryId-invalid"></div>
+                            </div>
+                        </div>
+                        <!---->
+                        <div class="row">
+                            <div class="col mx-auto">
+                                <button type="submit" class="btn btn-primary">Создать</button>
+                            </div>
+                        </div>
+                        <!---->
+                    </form>
+                </div>
+            </div>
+            <!---->
+        </div>
+        <!---->
+        <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/js/product-save.js}"></script>
+        <!---->
+    </body>
+    <!---->
+</html>

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.test_task.products_categories.dto.ProductSavingDto;
 import org.test_task.products_categories.entities.Product;
 import org.test_task.products_categories.exceptions.EntityNotFoundException;
@@ -56,7 +57,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product add(ProductSavingDto addingDto, BindingResult bindingResult) {
-        //validateBindingResult(bindingResult);
+        if (addingDto.getEncodedImage() == null) {
+            bindingResult.addError(new FieldError("emptyImage", "image", "Обязательное поле"));
+        }
+        validateBindingResult(bindingResult);
         String filename;
         try {
             filename = uploadImage(addingDto.getEncodedImage());

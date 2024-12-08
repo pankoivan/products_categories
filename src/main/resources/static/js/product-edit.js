@@ -10,7 +10,7 @@ categoryAddingForm.addEventListener("submit", (event) => {
     file = document.querySelector('input[type="file"]').files[0];
 
     if (file) {
-        convertFileToBase64(file)
+        encodeFileToBase64(file)
             .then((base64) => {
                 console.log("Base64:", base64);
                 const data = {
@@ -46,7 +46,7 @@ categoryAddingForm.addEventListener("submit", (event) => {
     //fetchAdd(data);
 });
 
-function convertFileToBase64(file) {
+function encodeFileToBase64(file) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
 
