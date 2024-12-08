@@ -50,6 +50,15 @@
                             </div>
                         </div>
                         <!---->
+                        <div class="row mb-3">
+                            <div class="col mx-auto">
+                                <label for="image" class="form-label mb-1">Категория</label>
+                                <select class="form-control" name="categoryId">
+                                    <option th:each="each : ${categories}" th:text="${each.name}" th:value="${each.id}" data-element="product-input-field"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <!---->
                         <div class="row">
                             <div class="col mx-auto">
                                 <button type="submit" class="btn btn-primary">Создать</button>

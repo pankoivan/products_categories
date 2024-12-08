@@ -34,7 +34,7 @@ public class ProductMvcController {
 
     @GetMapping("/edit/{id}")
     public String edit(Model model, @PathVariable("id") String pathId) {
-        model.addAttribute("category", service.findById(service.validateAndParsePathId(pathId)));
+        model.addAttribute("product", service.findById(service.validateAndParsePathId(pathId)));
         model.addAttribute("categories", categoryService.findAll());
         return "main/product/product-edit";
     }

@@ -75,8 +75,8 @@ public class ProductServiceImpl implements ProductService {
                         .price(addingDto.getPrice())
                         .imageName(filename)
                         .status(true)
-                        //.category(categoryService.findById(addingDto.getCategoryId()))
-                        .category(categoryService.findById(1))
+                        .category(categoryService.findById(addingDto.getCategoryId()))
+                        //.category(categoryService.findById(1))
                         .creationDate(LocalDateTime.now())
                         .build()
         );

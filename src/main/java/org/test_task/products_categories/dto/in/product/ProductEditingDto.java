@@ -12,7 +12,7 @@ import lombok.ToString;
 public class ProductEditingDto extends ProductSavingDto {
 
     @JsonProperty("id")
-    @NotNull(message = "Обязательное поле")
+    //@NotNull(message = "Обязательное поле")
     private Integer id;
 
     @JsonProperty("image")
