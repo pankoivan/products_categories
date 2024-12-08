@@ -22,7 +22,7 @@
                             <div th:text="${each.description}"></div>
                         </div>
                         <div>
-                            <button class="d-block btn btn-success w-100 mb-1">Изменить</button>
+                            <a href="#" th:href="@{/categories/edit/__${each.id}__}" class="d-block btn btn-success w-100 mb-1">Изменить</a>
                             <button class="d-block btn btn-danger w-100">Удалить</button>
                         </div>
                     </div>
@@ -31,53 +31,10 @@
             <!---->
             <div class="row">
                 <div class="col mx-auto">
-                    <button class="btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#category-adding-modal">Создать</button>
+                    <a href="#" th:href="@{/categories/add}" class="btn btn-lg btn-primary">Создать</a>
                 </div>
             </div>
             <!---->
-        </div>
-        <!---->
-        <div id="category-adding-modal" tabindex="-1" data-bs-backdrop="static" aria-hidden="true" class="modal fade">
-            <div class="modal-dialog modal-dialog-centered border-black">
-                <div class="modal-content">
-                    <!---->
-                    <div class="modal-header">
-                        <h1 class="modal-title text-primary fs-5">Создание категории</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <!---->
-                    <div class="modal-body text-primary fs-6 p-3 pt-2">
-                        <form action="#" th:action="@{/api/categories/add}" method="post" class="needs-validation" id="category-adding-form" novalidate>
-                            <!---->
-                            <div class="row mb-2">
-                                <div class="col mx-auto">
-                                    <label for="name" class="form-label mb-1">Название</label>
-                                    <input type="text" name="name" id="name" class="form-control" placeholder="Введите название категории" data-element="category-input-field" />
-                                    <div class="invalid-feedback" id="name-invalid"></div>
-                                </div>
-                            </div>
-                            <!---->
-                            <div class="row mb-2">
-                                <div class="col mx-auto">
-                                    <label for="description" class="form-label mb-1">Описание</label>
-                                    <input type="text" name="description" id="description" class="form-control" placeholder="Введите описание категории" data-element="category-input-field" />
-                                    <div class="invalid-feedback" id="description-invalid"></div>
-                                </div>
-                            </div>
-                            <!---->
-                            <div>
-                                <button type="submit" class="btn btn-primary mt-2">Создать</button>
-                            </div>
-                            <!---->
-                        </form>
-                    </div>
-                    <!---->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                    </div>
-                    <!---->
-                </div>
-            </div>
         </div>
         <!---->
         <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
