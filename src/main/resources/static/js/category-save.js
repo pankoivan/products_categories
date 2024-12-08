@@ -5,7 +5,6 @@ savingForm.addEventListener("submit", (event) => {
 });
 
 function fetchSave(isAdding, id) {
-    console.log(isAdding);
     fetch(isAdding ? "http://localhost:8080/api/categories" : `http://localhost:8080/api/categories/${id}`, {
         method: isAdding ? "POST" : "PUT",
         headers: {
