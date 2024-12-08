@@ -1,5 +1,6 @@
 package org.test_task.products_categories.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -29,6 +30,7 @@ public class Category extends AbstractBaseEntity {
 
     @OneToMany(mappedBy = "category")
     @Builder.Default
+    @JsonIgnore
     private Set<Product> products = new HashSet<>();
 
 }
