@@ -23,20 +23,20 @@ public class ProductMvcController {
     @GetMapping
     public String findAll(Model model) {
         model.addAttribute("products", service.findAll());
-        return "product/products";
+        return "main/product/products";
     }
 
     @GetMapping("/add")
     public String add(Model model) {
         model.addAttribute("categories", categoryService.findAll());
-        return "product/product-add";
+        return "main/product/product-add";
     }
 
     @GetMapping("/edit/{id}")
     public String edit(Model model, @PathVariable("id") String pathId) {
         model.addAttribute("category", service.findById(service.validateAndParsePathId(pathId)));
         model.addAttribute("categories", categoryService.findAll());
-        return "product/product-edit";
+        return "main/product/product-edit";
     }
 
 }
