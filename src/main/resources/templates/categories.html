@@ -1,10 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
 
-</body>
+<html lang="ru" xmlns:th="https://www.thymeleaf.org">
+    <!---->
+    <div th:replace="~{fragments/head :: head ('Категории')}"></div>
+    <!---->
+    <body>
+        <!---->
+        <div class="container text-primary fs-5 my-5">
+            <!---->
+            <div class="row" th:each="each, status : ${categories}" th:classappend="${!status.last} ? 'mb-3'">
+                <div class="col mx-auto">
+                    <div class="border border-black rounded p-2 d-flex flex-row align-items-center justify-content-between">
+                        <div>
+                            <div th:text="${each.name}" class="fw-semibold"></div>
+                            <div th:text="${each.description}"></div>
+                        </div>
+                        <div>
+                            <button class="d-block btn btn-success w-100 mb-1">Изменить</button>
+                            <button class="d-block btn btn-danger w-100">Удалить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!---->
+        </div>
+        <!---->
+        <script th:src="@{/js/bootstrap/bootstrap.bundle.min.js}"></script>
+        <!---->
+    </body>
+    <!---->
 </html>
