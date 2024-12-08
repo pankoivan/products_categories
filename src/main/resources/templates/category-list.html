@@ -6,7 +6,7 @@
     <!---->
     <body>
         <!---->
-        <div class="container text-primary fs-5 my-5">
+        <div class="container text-black fs-5 my-5">
             <!---->
             <div class="row mb-2">
                 <div class="col mx-auto">
@@ -14,9 +14,9 @@
                 </div>
             </div>
             <!---->
-            <div class="row mb-3" th:each="each, status : ${categories}">
+            <div class="row mb-3" th:each="each : ${categories}">
                 <div class="col mx-auto">
-                    <div class="border border-black rounded p-2 d-flex flex-row align-items-center justify-content-between">
+                    <div class="bg-light border border-black rounded p-2 d-flex flex-row align-items-center justify-content-between">
                         <div>
                             <div th:text="${each.name}" class="fw-semibold"></div>
                             <div th:text="${each.description}"></div>
@@ -35,7 +35,7 @@
                 </div>
             </div>
             <!---->
-            <form id="csrf-form" action="#" th:action="@{/api/categories/add}" method="post" class="d-none"></form>
+            <form id="csrf-form" action="#" th:action="@{/api/categories}" method="post" class="d-none"></form>
             <!---->
         </div>
         <!---->

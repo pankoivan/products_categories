@@ -6,7 +6,7 @@
     <!---->
     <body>
         <!---->
-        <div class="container text-primary fs-5 my-5">
+        <div class="container text-black fs-5 my-5">
             <!---->
             <div class="row mb-2">
                 <div class="col mx-auto">
@@ -14,9 +14,9 @@
                 </div>
             </div>
             <!---->
-            <div class="row mb-3">
+            <div class="row">
                 <div class="col mx-auto">
-                    <form th:attr="onsubmit=|fetchSave(${category == null}, ${category != null ? category.id : null})|" action="#" th:action="@{/api/categories}" method="post" class="border border-black rounded needs-validation p-3" novalidate>
+                    <form th:attr="onsubmit=|fetchSave(${category == null}, ${category != null ? category.id : null})|" action="#" th:action="@{/api/categories}" method="post" class="bg-light border border-black rounded needs-validation p-3" novalidate>
                         <!---->
                         <div class="row mb-2">
                             <div class="col mx-auto">
@@ -36,7 +36,7 @@
                         <!---->
                         <div class="row">
                             <div class="col mx-auto">
-                                <button type="submit" class="btn btn-primary">Создать</button>
+                                <button type="submit" class="btn btn-primary" th:text="${category == null} ? 'Создать' : 'Изменить'"></button>
                             </div>
                         </div>
                         <!---->
