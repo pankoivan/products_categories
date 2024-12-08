@@ -48,9 +48,10 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category edit(CategoryEditingDto editingDto, BindingResult bindingResult) {
+    public Category edit(Integer id, CategoryEditingDto editingDto, BindingResult bindingResult) {
         validateBindingResult(bindingResult);
-        Category category = findById(editingDto.getId());
+        //Category category = findById(editingDto.getId()); todo
+        Category category = findById(id);
         category.setName(editingDto.getName());
         category.setDescription(editingDto.getDescription());
         return repository.save(category);

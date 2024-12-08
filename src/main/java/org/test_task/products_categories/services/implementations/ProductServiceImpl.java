@@ -59,13 +59,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product add(ProductAddingDto addingDto, BindingResult bindingResult) {
-        validateBindingResult(bindingResult);
+        //validateBindingResult(bindingResult);
         String filename;
         try {
             filename = uploadImage(addingDto.getEncodedImage());
         } catch (IOException e) {
             throw new FileUploadingException("Произошла ошибка при загрузке файла на сервер", e);
         }
+        System.out.println(filename);
         return repository.save(
                 Product
                         .builder()
@@ -74,16 +75,18 @@ public class ProductServiceImpl implements ProductService {
                         .price(addingDto.getPrice())
                         .imageName(filename)
                         .status(true)
-                        .category(categoryService.findById(addingDto.getCategoryId()))
+                        //.category(categoryService.findById(addingDto.getCategoryId()))
+                        .category(categoryService.findById(1))
                         .creationDate(LocalDateTime.now())
                         .build()
         );
     }
 
     @Override
-    public Product edit(ProductEditingDto editingDto, BindingResult bindingResult) {
+    public Product edit(Integer id, ProductEditingDto editingDto, BindingResult bindingResult) {
         validateBindingResult(bindingResult);
-        Product product = findById(editingDto.getId());
+        //Product product = findById(editingDto.getId()); todo
+        Product product = findById(id);
         product.setName(editingDto.getName());
         product.setDescription(editingDto.getDescription());
         product.setPrice(editingDto.getPrice());
@@ -117,7 +120,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private String uploadImage(ProductSavingDto.EncodedBase64Image encodedImage) throws IOException {
-        String filename = UUID.randomUUID().toString();
+        String filename = String.format("%s.%s", UUID.randomUUID().toString(), encodedImage.extension());
         Files.write(Paths.get(uploadPath, filename), Base64.getDecoder().decode(encodedImage.image()));
         return filename;
     }

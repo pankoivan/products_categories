@@ -12,7 +12,7 @@ public interface BaseService<T, A, E> extends ValidationService {
 
     T add(A addingDto, BindingResult bindingResult);
 
-    T edit(E editingDto, BindingResult bindingResult);
+    T edit(Integer id, E editingDto, BindingResult bindingResult);
 
     void deleteById(Integer id);
 

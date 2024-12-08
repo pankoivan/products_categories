@@ -27,17 +27,17 @@ public class ProductRestController {
         return service.findAll();
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public void add(@RequestBody @Valid ProductAddingDto addingDto, BindingResult bindingResult) {
         service.add(addingDto, bindingResult);
     }
 
-    @PostMapping("/edit")
-    public void edit(@RequestBody @Valid ProductEditingDto editingDto, BindingResult bindingResult) {
-        service.edit(editingDto, bindingResult);
+    @PutMapping("/{id}")
+    public void edit(@PathVariable("id") String pathId, @RequestBody @Valid ProductEditingDto editingDto, BindingResult bindingResult) {
+        service.edit(service.validateAndParsePathId(pathId), editingDto, bindingResult);
     }
 
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void deleteById(@PathVariable("id") String pathId) {
         service.deleteById(service.validateAndParsePathId(pathId));
     }

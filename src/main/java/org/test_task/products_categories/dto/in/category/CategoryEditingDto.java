@@ -12,7 +12,7 @@ import lombok.ToString;
 public class CategoryEditingDto extends CategorySavingDto {
 
     @JsonProperty("id")
-    @NotNull(message = "Обязательное поле")
+    //@NotNull(message = "Обязательное поле")
     private Integer id;
 
 }
