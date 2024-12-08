@@ -8,9 +8,18 @@
         <!---->
         <div class="container text-black fs-5 my-5">
             <!---->
-            <div class="row mb-2">
+            <div class="row mb-4">
                 <div class="col mx-auto">
-                    <h1 class="fs-4">Товары</h1>
+                    <div class="d-flex flex-row align-items-center justify-content-between">
+                        <h1 class="fs-4">Товары</h1>
+                        <div class="d-flex flex-row align-items-center justify-content-between">
+                            <input type="text" name="name" class="form-control me-1" placeholder="Название" />
+                            <input type="number" name="priceFrom" step="0.01" class="form-control me-1" placeholder="Цена: от" />
+                            <input type="number" name="priceTo" step="0.01" class="form-control me-1" placeholder="Цена: до" />
+                            <input type="text" name="categoryName" class="form-control me-1" placeholder="Категория" />
+                            <button onclick="search()" class="btn btn-primary">Найти</button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!---->
@@ -49,7 +58,7 @@
                 </div>
             </div>
             <!---->
-            <div class="row mt-3">
+            <div class="row text-center mt-4">
                 <div class="col mx-auto">
                     <a href="#" th:href="@{/products/add}" class="btn btn-lg btn-primary">Создать</a>
                 </div>
@@ -61,6 +70,7 @@
         <!---->
         <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
         <script th:src="@{/js/entity-delete.js}"></script>
+        <script th:src="@{/js/product-search.js}"></script>
         <!---->
     </body>
     <!---->

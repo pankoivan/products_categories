@@ -67,7 +67,6 @@ public class ProductServiceImpl implements ProductService {
         } catch (IOException e) {
             throw new FileUploadingException("Произошла ошибка при загрузке файла на сервер", e);
         }
-        System.out.println(filename);
         return repository.save(
                 Product
                         .builder()
@@ -129,17 +128,21 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private Stream<Product> safePriceFromSearch(Stream<Product> stream, String priceFrom) {
+        int parsedPriceFrom;
         try {
-            return stream.filter(product -> product.getPrice() >= Integer.parseInt(priceFrom));
-        } catch (IllegalArgumentException e) {
+            parsedPriceFrom = Integer.parseInt(priceFrom);
+            return stream.filter(product -> product.getPrice() >= parsedPriceFrom);
+        } catch (NumberFormatException e) {
             return stream;
         }
     }
 
     private Stream<Product> safePriceToSearch(Stream<Product> stream, String priceTo) {
+        int parsedPriceTo;
         try {
-            return stream.filter(product -> product.getPrice() <= Integer.parseInt(priceTo));
-        } catch (IllegalArgumentException e) {
+            parsedPriceTo = Integer.parseInt(priceTo);
+            return stream.filter(product -> product.getPrice() <= parsedPriceTo);
+        } catch (NumberFormatException e) {
             return stream;
         }
     }

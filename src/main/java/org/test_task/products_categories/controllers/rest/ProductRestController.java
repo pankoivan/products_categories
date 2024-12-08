@@ -21,7 +21,8 @@ public class ProductRestController {
     private final ProductService service;
 
     @GetMapping
-    public List<Product> findAll(Map<String, String> params) {
+    public List<Product> findAll(@RequestParam Map<String, String> params) {
+        System.out.println(params);
         return service.findAll(params);
     }
 
