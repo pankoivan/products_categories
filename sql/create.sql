@@ -14,3 +14,10 @@ CREATE TABLE product (
 	image_name VARCHAR (256) NOT NULL,
 	creation_date TIMESTAMP NOT NULL
 );
+
+CREATE TABLE app_user (
+	id SERIAL PRIMARY KEY,
+	username VARCHAR (32) UNIQUE NOT NULL,
+	password VARCHAR (256) NOT NULL,
+	role VARCHAR (8) NOT NULL
+);

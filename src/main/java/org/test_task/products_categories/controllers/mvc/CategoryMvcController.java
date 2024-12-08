@@ -12,7 +12,7 @@ import org.test_task.products_categories.services.interfaces.CategoryService;
 @Controller
 @RequestMapping("/categories")
 @AllArgsConstructor
-@PreAuthorize("permitAll()")
+@PreAuthorize("isAuthenticated()")
 public class CategoryMvcController {
 
     private final CategoryService service;
