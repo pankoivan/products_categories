@@ -23,7 +23,7 @@ public class ProductMvcController {
     @GetMapping
     public String findAll(Model model) {
         model.addAttribute("products", service.findAll());
-        return "main/product/products";
+        return "product-list";
     }
 
     @GetMapping("/add")
@@ -31,7 +31,7 @@ public class ProductMvcController {
         model.addAttribute("title", "Создание продукта");
         model.addAttribute("product", null);
         model.addAttribute("categories", categoryService.findAll());
-        return "main/product/product-save";
+        return "product-save";
     }
 
     @GetMapping("/edit/{id}")
@@ -39,7 +39,7 @@ public class ProductMvcController {
         model.addAttribute("title", "Изменение продукта");
         model.addAttribute("product", service.findById(service.validateAndParsePathId(pathId)));
         model.addAttribute("categories", categoryService.findAll());
-        return "main/product/product-save";
+        return "product-save";
     }
 
 }

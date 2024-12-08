@@ -20,21 +20,21 @@ public class CategoryMvcController {
     @GetMapping
     public String findAll(Model model) {
         model.addAttribute("categories", service.findAll());
-        return "main/category/categories";
+        return "category-list";
     }
 
     @GetMapping("/add")
     public String add(Model model) {
         model.addAttribute("title", "Создание категории");
         model.addAttribute("category", null);
-        return "main/category/category-save";
+        return "category-save";
     }
 
     @GetMapping("/edit/{id}")
     public String edit(Model model, @PathVariable("id") String pathId) {
         model.addAttribute("title", "Изменение категории");
         model.addAttribute("category", service.findById(service.validateAndParsePathId(pathId)));
-        return "main/category/category-save";
+        return "category-save";
     }
 
 }
