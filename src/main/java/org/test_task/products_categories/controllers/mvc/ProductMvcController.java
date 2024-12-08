@@ -28,15 +28,18 @@ public class ProductMvcController {
 
     @GetMapping("/add")
     public String add(Model model) {
+        model.addAttribute("title", "Создание продукта");
+        model.addAttribute("product", null);
         model.addAttribute("categories", categoryService.findAll());
-        return "main/product/product-add";
+        return "main/product/product-save";
     }
 
     @GetMapping("/edit/{id}")
     public String edit(Model model, @PathVariable("id") String pathId) {
+        model.addAttribute("title", "Изменение продукта");
         model.addAttribute("product", service.findById(service.validateAndParsePathId(pathId)));
         model.addAttribute("categories", categoryService.findAll());
-        return "main/product/product-edit";
+        return "main/product/product-save";
     }
 
 }

@@ -22,6 +22,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -47,14 +48,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> findAll(Map<String, String> params) {
-        // todo: обработать некорректные параметры GET-запроса
-        return findAll()
-                .stream()
-                .filter(product -> product.getName().contains(params.get("name")))
-                .filter(product -> product.getPrice() >= Integer.parseInt(params.get("priceFrom")))
-                .filter(product -> product.getPrice() <= Integer.parseInt(params.get("priceTo")))
-                .filter(product -> product.getCategory().getName().contains("categoryName"))
-                .toList();
+        Stream<Product> productStream = findAll().stream();
+        productStream = safeNameSearch(productStream, params.get("name"));
+        productStream = safePriceFromSearch(productStream, params.get("priceFrom"));
+        productStream = safePriceToSearch(productStream, params.get("priceTo"));
+        productStream = safeCategoryNameSearch(productStream, params.get("categoryName"));
+        return productStream.toList();
     }
 
     @Override
@@ -76,7 +75,6 @@ public class ProductServiceImpl implements ProductService {
                         .imageName(filename)
                         .status(true)
                         .category(categoryService.findById(addingDto.getCategoryId()))
-                        //.category(categoryService.findById(1))
                         .creationDate(LocalDateTime.now())
                         .build()
         );
@@ -85,7 +83,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product edit(Integer id, ProductEditingDto editingDto, BindingResult bindingResult) {
         validateBindingResult(bindingResult);
-        //Product product = findById(editingDto.getId()); todo
         Product product = findById(id);
         product.setName(editingDto.getName());
         product.setDescription(editingDto.getDescription());
@@ -123,6 +120,30 @@ public class ProductServiceImpl implements ProductService {
         String filename = String.format("%s.%s", UUID.randomUUID().toString(), encodedImage.extension());
         Files.write(Paths.get(uploadPath, filename), Base64.getDecoder().decode(encodedImage.image()));
         return filename;
+    }
+
+    private Stream<Product> safeNameSearch(Stream<Product> stream, String name) {
+        return name != null ? stream.filter(product -> product.getName().contains(name)) : stream;
+    }
+
+    private Stream<Product> safePriceFromSearch(Stream<Product> stream, String priceFrom) {
+        try {
+            return stream.filter(product -> product.getPrice() >= Integer.parseInt(priceFrom));
+        } catch (IllegalArgumentException e) {
+            return stream;
+        }
+    }
+
+    private Stream<Product> safePriceToSearch(Stream<Product> stream, String priceTo) {
+        try {
+            return stream.filter(product -> product.getPrice() <= Integer.parseInt(priceTo));
+        } catch (IllegalArgumentException e) {
+            return stream;
+        }
+    }
+
+    private Stream<Product> safeCategoryNameSearch(Stream<Product> stream, String categoryName) {
+        return categoryName != null ? stream.filter(product -> product.getCategory().getName().contains(categoryName)) : stream;
     }
 
 }

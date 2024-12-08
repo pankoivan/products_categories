@@ -25,16 +25,18 @@ public class CategoryRestController {
         return service.findAll();
     }
 
+    @GetMapping("/{id}")
+    public Category findById(@PathVariable("id") String pathId) {
+        return service.findById(service.validateAndParsePathId(pathId));
+    }
+
     @PostMapping
     public void add(@RequestBody @Valid CategoryAddingDto addingDto, BindingResult bindingResult) {
-        System.out.println(addingDto);
         service.add(addingDto, bindingResult);
     }
 
     @PutMapping("/{id}")
     public void edit(@PathVariable("id") String pathId, @RequestBody @Valid CategoryEditingDto editingDto, BindingResult bindingResult) {
-        System.out.println(pathId);
-        System.out.println(editingDto);
         service.edit(service.validateAndParsePathId(pathId), editingDto, bindingResult);
     }
 
