@@ -1,0 +1,27 @@
+package org.test_task.products_categories.config;
+
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+@RequiredArgsConstructor
+@Setter(onMethod = @__(@Autowired))
+@Configuration
+public class MvcConfig implements WebMvcConfigurer {
+
+    @Value("${my.file.upload-path}")
+    private final String uploadPath;
+
+    @Override
+    // todo: не забыть про Security на этот URL-адрес
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry
+                .addResourceHandler("/uploads/**")
+                .addResourceLocations("file:///%s/".formatted(uploadPath));
+    }
+
+}
