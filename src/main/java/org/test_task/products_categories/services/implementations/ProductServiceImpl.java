@@ -11,7 +11,7 @@ import org.springframework.validation.FieldError;
 import org.test_task.products_categories.dto.ProductSavingDto;
 import org.test_task.products_categories.entities.Product;
 import org.test_task.products_categories.exceptions.EntityNotFoundException;
-import org.test_task.products_categories.exceptions.FileUploadingException;
+import org.test_task.products_categories.exceptions.FileOperationsException;
 import org.test_task.products_categories.repositories.ProductRepository;
 import org.test_task.products_categories.services.interfaces.CategoryService;
 import org.test_task.products_categories.services.interfaces.ProductService;
@@ -56,58 +56,48 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product add(ProductSavingDto addingDto, BindingResult bindingResult) {
-        if (addingDto.getEncodedImage() == null) {
+    public Product add(ProductSavingDto savingDto, BindingResult bindingResult) {
+        if (savingDto.getEncodedImage() == null) {
             bindingResult.addError(new FieldError("emptyImage", "image", "Обязательное поле"));
         }
         validateBindingResult(bindingResult);
-        String filename;
-        try {
-            filename = uploadImage(addingDto.getEncodedImage());
-        } catch (IOException e) {
-            throw new FileUploadingException("Произошла ошибка при загрузке файла на сервер", e);
-        }
+        String filename = uploadImage(savingDto.getEncodedImage());
         return repository.save(
                 Product
                         .builder()
-                        .name(addingDto.getName())
-                        .description(addingDto.getDescription())
-                        .price(addingDto.getPrice())
+                        .name(savingDto.getName())
+                        .description(savingDto.getDescription())
+                        .price(savingDto.getPrice())
                         .imageName(filename)
                         .status(true)
-                        .category(categoryService.findById(addingDto.getCategoryId()))
+                        .category(categoryService.findById(savingDto.getCategoryId()))
                         .creationDate(LocalDateTime.now())
                         .build()
         );
     }
 
     @Override
-    public Product edit(Integer id, ProductSavingDto editingDto, BindingResult bindingResult) {
+    @Transactional
+    public Product edit(Integer id, ProductSavingDto savingDto, BindingResult bindingResult) {
         validateBindingResult(bindingResult);
         Product product = findById(id);
-        product.setName(editingDto.getName());
-        product.setDescription(editingDto.getDescription());
-        product.setPrice(editingDto.getPrice());
-        if (editingDto.getStatus() != null) {
-            product.setStatus(editingDto.getStatus());
-        }
-        if (editingDto.getCategoryId() != null) {
-            product.setCategory(categoryService.findById(editingDto.getCategoryId()));
-        }
-        if (editingDto.getEncodedImage() != null) {
-            try {
-                product.setImageName(uploadImage(editingDto.getEncodedImage()));
-            } catch (IOException e) {
-                throw new FileUploadingException("Произошла ошибка при загрузке файла на сервер", e);
-            }
+        product.setName(savingDto.getName());
+        product.setDescription(savingDto.getDescription());
+        product.setPrice(savingDto.getPrice());
+        product.setStatus(savingDto.getStatus());
+        product.setCategory(categoryService.findById(savingDto.getCategoryId()));
+        if (savingDto.getEncodedImage() != null) {
+            product.setImageName(uploadImage(savingDto.getEncodedImage()));
         }
         return repository.save(product);
     }
 
     @Override
+    @Transactional
     public void deleteById(Integer id) {
         Product product = findById(id);
         repository.deleteById(product.getId());
+        deleteFromFileSystem(product.getImageName());
     }
 
     @Override
@@ -117,10 +107,22 @@ public class ProductServiceImpl implements ProductService {
         repository.saveAll(products);
     }
 
-    private String uploadImage(ProductSavingDto.EncodedBase64Image encodedImage) throws IOException {
-        String filename = String.format("%s.%s", UUID.randomUUID().toString(), encodedImage.extension());
-        Files.write(Paths.get(uploadPath, filename), Base64.getDecoder().decode(encodedImage.image()));
-        return filename;
+    private String uploadImage(ProductSavingDto.EncodedBase64Image encodedImage) {
+        try {
+            String filename = String.format("%s.%s", UUID.randomUUID(), encodedImage.extension());
+            Files.write(Paths.get(uploadPath, filename), Base64.getDecoder().decode(encodedImage.image()));
+            return filename;
+        } catch (IOException e) {
+            throw new FileOperationsException("Произошла ошибка при загрузке файла на сервер", e);
+        }
+    }
+
+    private void deleteFromFileSystem(String filename) {
+        try {
+            Files.delete(Paths.get(uploadPath, filename));
+        } catch (IOException e) {
+            throw new FileOperationsException("Произошла ошибка при удалении файла с сервера", e);
+        }
     }
 
     private Stream<Product> safeNameSearch(Stream<Product> stream, String name) {

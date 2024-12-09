@@ -4,17 +4,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-public class FileUploadingException extends RuntimeException {
+public class FileOperationsException extends RuntimeException {
 
-    public FileUploadingException() {
+    public FileOperationsException() {
 
     }
 
-    public FileUploadingException(String msg) {
+    public FileOperationsException(String msg) {
         super(msg);
     }
 
-    public FileUploadingException(String msg, Throwable cause) {
+    public FileOperationsException(String msg, Throwable cause) {
         super(msg, cause);
     }
 
