@@ -14,8 +14,8 @@
                         <h1 class="fs-4">Товары</h1>
                         <div class="d-flex flex-row align-items-center justify-content-between">
                             <input type="text" name="name" class="form-control me-1" placeholder="Название" />
-                            <input type="number" name="priceFrom" step="0.01" class="form-control me-1" placeholder="Цена: от" />
-                            <input type="number" name="priceTo" step="0.01" class="form-control me-1" placeholder="Цена: до" />
+                            <input type="number" step="0.01" name="priceFrom" class="form-control me-1" placeholder="Цена: от" />
+                            <input type="number" step="0.01" name="priceTo" class="form-control me-1" placeholder="Цена: до" />
                             <input type="text" name="categoryName" class="form-control me-1" placeholder="Категория" />
                             <button onclick="search()" class="btn btn-primary">Найти</button>
                         </div>
@@ -26,7 +26,7 @@
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 text-center g-5">
                 <div class="col mx-auto" th:each="each : ${products}">
                     <div class="card bg-light">
-                        <img th:src="@{/uploads/__${each.imageName}__}" width="256" height="256" class="card-img-top rounded px-2 pt-2" alt="Изображение" />
+                        <img th:src="@{/uploads/__${each.imageName}__}" width="256" class="card-img-top rounded px-2 pt-2" alt="Изображение" />
                         <div class="card-body text-start">
                             <h5 class="card-title text-center mb-3" th:text="${each.name}"></h5>
                             <div class="mb-1">
@@ -44,7 +44,7 @@
                             </div>
                             <div class="mb-1">
                                 <span class="fw-semibold">Категория:</span>
-                                <span th:text="${each.category != null ? each.category.name : 'отсутствует'}"></span>
+                                <span th:text="${each.category != null ? each.category.name : 'Отсутствует'}"></span>
                             </div>
                             <div class="mb-2">
                                 <span class="fw-semibold">Создан:</span>
@@ -65,7 +65,7 @@
                 </div>
             </div>
             <!---->
-            <form id="csrf-form" action="#" th:action="@{/api/categories}" method="post" class="d-none"></form>
+            <form id="csrf-form" action="#" th:action="@{/api/products}" method="post" class="d-none"></form>
             <!---->
         </div>
         <!---->
