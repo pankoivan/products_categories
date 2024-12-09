@@ -62,15 +62,14 @@ public class ProductServiceImpl implements ProductService {
             bindingResult.addError(new FieldError("emptyImage", "image", "Обязательное поле"));
         }
         validateBindingResult(bindingResult);
-        String filename = uploadImage(savingDto.getEncodedImage());
         return repository.save(
                 Product
                         .builder()
                         .name(savingDto.getName())
                         .description(savingDto.getDescription())
                         .price(savingDto.getPrice())
-                        .imageName(filename)
-                        .status(true)
+                        .imageName(uploadImage(savingDto.getEncodedImage()))
+                        .status(savingDto.getStatus())
                         .category(categoryService.findById(savingDto.getCategoryId()))
                         .creationDate(LocalDateTime.now())
                         .build()
@@ -88,7 +87,7 @@ public class ProductServiceImpl implements ProductService {
         product.setStatus(savingDto.getStatus());
         product.setCategory(categoryService.findById(savingDto.getCategoryId()));
         if (savingDto.getEncodedImage() != null) {
-            deleteFromFileSystem(product.getImageName());
+            deleteImageFromFileSystem(product.getImageName());
             product.setImageName(uploadImage(savingDto.getEncodedImage()));
         }
         return repository.save(product);
@@ -99,7 +98,7 @@ public class ProductServiceImpl implements ProductService {
     public void deleteById(Integer id) {
         Product product = findById(id);
         repository.deleteById(product.getId());
-        deleteFromFileSystem(product.getImageName());
+        deleteImageFromFileSystem(product.getImageName());
     }
 
     @Override
@@ -119,7 +118,7 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
-    private void deleteFromFileSystem(String filename) {
+    private void deleteImageFromFileSystem(String filename) {
         try {
             Files.delete(Paths.get(uploadPath, filename));
         } catch (IOException e) {
