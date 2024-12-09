@@ -56,6 +56,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public Product add(ProductSavingDto savingDto, BindingResult bindingResult) {
         if (savingDto.getEncodedImage() == null) {
             bindingResult.addError(new FieldError("emptyImage", "image", "Обязательное поле"));
@@ -87,6 +88,7 @@ public class ProductServiceImpl implements ProductService {
         product.setStatus(savingDto.getStatus());
         product.setCategory(categoryService.findById(savingDto.getCategoryId()));
         if (savingDto.getEncodedImage() != null) {
+            deleteFromFileSystem(product.getImageName());
             product.setImageName(uploadImage(savingDto.getEncodedImage()));
         }
         return repository.save(product);
