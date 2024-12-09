@@ -23,7 +23,7 @@
                 </div>
             </div>
             <!---->
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 text-center g-5">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 text-center g-4">
                 <div class="col mx-auto" th:each="each : ${products}">
                     <div class="card bg-light">
                         <img th:src="@{/uploads/__${each.imageName}__}" width="256" class="card-img-top rounded px-2 pt-2" alt="Изображение" />
