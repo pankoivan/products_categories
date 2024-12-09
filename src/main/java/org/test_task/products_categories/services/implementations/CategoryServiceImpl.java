@@ -35,23 +35,23 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category add(CategorySavingDto addingDto, BindingResult bindingResult) {
+    public Category add(CategorySavingDto savingDto, BindingResult bindingResult) {
         validateBindingResult(bindingResult);
         return repository.save(
                 Category
                         .builder()
-                        .name(addingDto.getName())
-                        .description(addingDto.getDescription())
+                        .name(savingDto.getName())
+                        .description(savingDto.getDescription())
                         .build()
         );
     }
 
     @Override
-    public Category edit(Integer id, CategorySavingDto editingDto, BindingResult bindingResult) {
+    public Category edit(Integer id, CategorySavingDto savingDto, BindingResult bindingResult) {
         validateBindingResult(bindingResult);
         Category category = findById(id);
-        category.setName(editingDto.getName());
-        category.setDescription(editingDto.getDescription());
+        category.setName(savingDto.getName());
+        category.setDescription(savingDto.getDescription());
         return repository.save(category);
     }
 

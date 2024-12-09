@@ -21,12 +21,13 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/uploads/**").authenticated()
                         .anyRequest().permitAll()
-                ).formLogin(
+                )
+                .formLogin(
                         Customizer.withDefaults()
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/")
+                        .logoutSuccessUrl("/login")
                 );
         return http.build();
     }

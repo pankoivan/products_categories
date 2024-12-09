@@ -23,7 +23,6 @@ public class ProductRestController {
     @GetMapping
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public List<Product> findAll(@RequestParam Map<String, String> params) {
-        System.out.println(params);
         return service.findAll(params);
     }
 
@@ -35,14 +34,14 @@ public class ProductRestController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public void add(@RequestBody @Valid ProductSavingDto savingDto, BindingResult bindingResult) {
-        service.add(savingDto, bindingResult);
+    public Product add(@RequestBody @Valid ProductSavingDto savingDto, BindingResult bindingResult) {
+        return service.add(savingDto, bindingResult);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public void edit(@PathVariable("id") String pathId, @RequestBody @Valid ProductSavingDto savingDto, BindingResult bindingResult) {
-        service.edit(service.validateAndParsePathId(pathId), savingDto, bindingResult);
+    public Product edit(@PathVariable("id") String pathId, @RequestBody @Valid ProductSavingDto savingDto, BindingResult bindingResult) {
+        return service.edit(service.validateAndParsePathId(pathId), savingDto, bindingResult);
     }
 
     @DeleteMapping("/{id}")

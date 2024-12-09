@@ -18,22 +18,22 @@ import org.test_task.products_categories.exceptions.UrlValidationException;
 public class RestExceptionInterceptor {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(UrlValidationException.class)
-    public ResponseEntity<NotFieldsValidationExceptionResponseEntity> badRequest(UrlValidationException e) {
-        NotFieldsValidationExceptionResponseEntity json = new NotFieldsValidationExceptionResponseEntity(e.getMessage());
-        return new ResponseEntity<>(json, HttpStatus.BAD_REQUEST);
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(InputFieldsValidationException.class)
     public ResponseEntity<FieldsValidationExceptionResponseEntity> badRequest(InputFieldsValidationException e) {
         FieldsValidationExceptionResponseEntity json = new FieldsValidationExceptionResponseEntity(e.getFieldErrors());
         return new ResponseEntity<>(json, HttpStatus.BAD_REQUEST);
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(UrlValidationException.class)
+    public ResponseEntity<NotFieldsValidationExceptionResponseEntity> badRequest(UrlValidationException e) {
+        NotFieldsValidationExceptionResponseEntity json = new NotFieldsValidationExceptionResponseEntity(e.getMessage());
+        return new ResponseEntity<>(json, HttpStatus.BAD_REQUEST);
+    }
+
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<NotFieldsValidationExceptionResponseEntity> badRequest(EntityNotFoundException e) {
+    public ResponseEntity<NotFieldsValidationExceptionResponseEntity> notFound(EntityNotFoundException e) {
         NotFieldsValidationExceptionResponseEntity json = new NotFieldsValidationExceptionResponseEntity(e.getMessage());
         return new ResponseEntity<>(json, HttpStatus.NOT_FOUND);
     }

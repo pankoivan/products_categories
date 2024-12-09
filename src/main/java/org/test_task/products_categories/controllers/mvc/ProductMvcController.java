@@ -33,7 +33,7 @@ public class ProductMvcController {
     @GetMapping("/add")
     @PreAuthorize("hasRole('ADMIN')")
     public String add(Model model) {
-        model.addAttribute("title", "Создание продукта");
+        model.addAttribute("title", "Создание товара");
         model.addAttribute("product", null);
         model.addAttribute("categories", categoryService.findAll());
         return "product-save";
@@ -42,7 +42,7 @@ public class ProductMvcController {
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public String edit(Model model, @PathVariable("id") String pathId) {
-        model.addAttribute("title", "Изменение продукта");
+        model.addAttribute("title", "Изменение товара");
         model.addAttribute("product", service.findById(service.validateAndParsePathId(pathId)));
         model.addAttribute("categories", categoryService.findAll());
         return "product-save";

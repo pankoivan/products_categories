@@ -33,14 +33,14 @@ public class CategoryRestController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public void add(@RequestBody @Valid CategorySavingDto savingDto, BindingResult bindingResult) {
-        service.add(savingDto, bindingResult);
+    public Category add(@RequestBody @Valid CategorySavingDto savingDto, BindingResult bindingResult) {
+        return service.add(savingDto, bindingResult);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public void edit(@PathVariable("id") String pathId, @RequestBody @Valid CategorySavingDto savingDto, BindingResult bindingResult) {
-        service.edit(service.validateAndParsePathId(pathId), savingDto, bindingResult);
+    public Category edit(@PathVariable("id") String pathId, @RequestBody @Valid CategorySavingDto savingDto, BindingResult bindingResult) {
+        return service.edit(service.validateAndParsePathId(pathId), savingDto, bindingResult);
     }
 
     @DeleteMapping("/{id}")
